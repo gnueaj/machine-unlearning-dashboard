@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Unlearning-Comparator/static/css/main.e2d3edcc.css",
-    "main.js": "/Unlearning-Comparator/static/js/main.0007032f.js",
+    "main.js": "/Unlearning-Comparator/static/js/main.2386b545.js",
     "static/js/4029.12992573.chunk.js": "/Unlearning-Comparator/static/js/4029.12992573.chunk.js",
     "static/js/6254.034ca514.chunk.js": "/Unlearning-Comparator/static/js/6254.034ca514.chunk.js",
     "static/js/4232.50044b35.chunk.js": "/Unlearning-Comparator/static/js/4232.50044b35.chunk.js",
@@ -54,10 +54,10 @@
     "static/js/5957.a4c63b38.chunk.js": "/Unlearning-Comparator/static/js/5957.a4c63b38.chunk.js",
     "index.html": "/Unlearning-Comparator/index.html",
     "main.e2d3edcc.css.map": "/Unlearning-Comparator/static/css/main.e2d3edcc.css.map",
-    "main.0007032f.js.map": "/Unlearning-Comparator/static/js/main.0007032f.js.map"
+    "main.2386b545.js.map": "/Unlearning-Comparator/static/js/main.2386b545.js.map"
   },
   "entrypoints": [
     "static/css/main.e2d3edcc.css",
-    "static/js/main.0007032f.js"
+    "static/js/main.2386b545.js"
   ]
 }
