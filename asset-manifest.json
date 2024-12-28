@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Machine-Unlearning-Comparator/static/css/main.28824a4b.css",
-    "main.js": "/Machine-Unlearning-Comparator/static/js/main.4c268bcc.js",
+    "main.css": "/Machine-Unlearning-Comparator/static/css/main.03494da5.css",
+    "main.js": "/Machine-Unlearning-Comparator/static/js/main.fd5fd729.js",
     "static/js/4029.12992573.chunk.js": "/Machine-Unlearning-Comparator/static/js/4029.12992573.chunk.js",
     "static/js/6254.034ca514.chunk.js": "/Machine-Unlearning-Comparator/static/js/6254.034ca514.chunk.js",
     "static/js/4232.50044b35.chunk.js": "/Machine-Unlearning-Comparator/static/js/4232.50044b35.chunk.js",
@@ -53,11 +53,11 @@
     "static/js/3290.bac1bf9a.chunk.js": "/Machine-Unlearning-Comparator/static/js/3290.bac1bf9a.chunk.js",
     "static/js/5957.a4c63b38.chunk.js": "/Machine-Unlearning-Comparator/static/js/5957.a4c63b38.chunk.js",
     "index.html": "/Machine-Unlearning-Comparator/index.html",
-    "main.28824a4b.css.map": "/Machine-Unlearning-Comparator/static/css/main.28824a4b.css.map",
-    "main.4c268bcc.js.map": "/Machine-Unlearning-Comparator/static/js/main.4c268bcc.js.map"
+    "main.03494da5.css.map": "/Machine-Unlearning-Comparator/static/css/main.03494da5.css.map",
+    "main.fd5fd729.js.map": "/Machine-Unlearning-Comparator/static/js/main.fd5fd729.js.map"
   },
   "entrypoints": [
-    "static/css/main.28824a4b.css",
-    "static/js/main.4c268bcc.js"
+    "static/css/main.03494da5.css",
+    "static/js/main.fd5fd729.js"
   ]
 }
