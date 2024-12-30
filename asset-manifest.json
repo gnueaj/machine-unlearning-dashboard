@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Machine-Unlearning-Comparator/static/css/main.e98229ec.css",
-    "main.js": "/Machine-Unlearning-Comparator/static/js/main.0659a7fe.js",
+    "main.js": "/Machine-Unlearning-Comparator/static/js/main.f3417149.js",
     "static/js/4029.12992573.chunk.js": "/Machine-Unlearning-Comparator/static/js/4029.12992573.chunk.js",
     "static/js/6254.034ca514.chunk.js": "/Machine-Unlearning-Comparator/static/js/6254.034ca514.chunk.js",
     "static/js/4232.50044b35.chunk.js": "/Machine-Unlearning-Comparator/static/js/4232.50044b35.chunk.js",
@@ -54,10 +54,10 @@
     "static/js/5957.a4c63b38.chunk.js": "/Machine-Unlearning-Comparator/static/js/5957.a4c63b38.chunk.js",
     "index.html": "/Machine-Unlearning-Comparator/index.html",
     "main.e98229ec.css.map": "/Machine-Unlearning-Comparator/static/css/main.e98229ec.css.map",
-    "main.0659a7fe.js.map": "/Machine-Unlearning-Comparator/static/js/main.0659a7fe.js.map"
+    "main.f3417149.js.map": "/Machine-Unlearning-Comparator/static/js/main.f3417149.js.map"
   },
   "entrypoints": [
     "static/css/main.e98229ec.css",
-    "static/js/main.0659a7fe.js"
+    "static/js/main.f3417149.js"
   ]
 }
