@@ -11,12 +11,6 @@ import {
 } from "@tanstack/react-table";
 
 import {
-  ContextMenu,
-  ContextMenuTrigger,
-  ContextMenuContent,
-  ContextMenuItem,
-} from "../UI/context-menu";
-import {
   Table,
   TableBody,
   TableCell,
@@ -24,19 +18,13 @@ import {
   TableHeader,
   TableRow,
 } from "../UI/table";
-import {
-  deleteRow,
-  downloadJSON,
-  downloadPTH,
-} from "../../utils/api/dataTable";
+import { ContextMenu, ContextMenuTrigger } from "../UI/context-menu";
 import { COLORS } from "../../constants/colors";
 import { useForgetClass } from "../../hooks/useForgetClass";
 import { useModelSelection } from "../../hooks/useModelSelection";
-import { fetchAllExperimentsData } from "../../utils/api/unlearning";
 import { calculatePerformanceMetrics } from "../../utils/data/experiments";
 import { ExperimentData } from "../../types/data";
 import { PerformanceMetrics } from "../../types/experiments";
-import { Experiments } from "../../types/experiments-context";
 import { hexToRgba } from "../../utils/data/colors";
 import { ScrollArea } from "../UI/scroll-area";
 import { ExperimentsContext } from "../../store/experiments-context";
@@ -53,13 +41,12 @@ export default function DataTable({
 }: {
   columns: ColumnDef<ExperimentData>[];
 }) {
-  const { experiments, saveExperiments, setIsExperimentsLoading } =
-    useContext(ExperimentsContext);
+  const { experiments } = useContext(ExperimentsContext);
   const { saveBaseline, saveComparison } = useContext(
     BaselineComparisonContext
   );
 
-  const { forgetClass, forgetClassNumber } = useForgetClass();
+  const { forgetClass } = useForgetClass();
   const { baseline, comparison } = useModelSelection();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -205,84 +192,6 @@ export default function DataTable({
     tableData,
   ]);
 
-  const handleDeleteRow = async (id: string) => {
-    try {
-      await deleteRow(forgetClassNumber, id);
-      setIsExperimentsLoading(true);
-      const allExperiments: Experiments = await fetchAllExperimentsData(
-        forgetClassNumber
-      );
-      if ("detail" in allExperiments) {
-        saveExperiments({});
-      } else {
-        const sortedExperiments = Object.fromEntries(
-          Object.entries(allExperiments).sort(([id1], [id2]) =>
-            id1.localeCompare(id2)
-          )
-        );
-        saveExperiments(sortedExperiments);
-        if (id === baseline) {
-          if (!comparison.startsWith("000")) {
-            saveBaseline(`000${forgetClass}`);
-          } else if (!comparison.startsWith("a00")) {
-            saveBaseline(`a00${forgetClass}`);
-          } else {
-            const nextBaselineExperiment = Object.values(
-              sortedExperiments
-            ).find((experiment) => experiment.id !== comparison);
-            saveBaseline(nextBaselineExperiment!.id);
-          }
-        } else if (id === comparison) {
-          if (!baseline.startsWith("000")) {
-            saveComparison(`000${forgetClass}`);
-          } else if (!baseline.startsWith("a00")) {
-            saveComparison(`a00${forgetClass}`);
-          } else {
-            const nextComparisonExperiment = Object.values(
-              sortedExperiments
-            ).find((experiment) => experiment.id !== baseline);
-            saveComparison(nextComparisonExperiment!.id);
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Failed to delete the row:", error);
-    } finally {
-      setIsExperimentsLoading(false);
-    }
-  };
-
-  const handleDownloadJSON = async (id: string) => {
-    try {
-      const json = await downloadJSON(forgetClassNumber, id);
-
-      const jsonString = JSON.stringify(json, null, 2);
-
-      const blob = new Blob([jsonString], { type: "application/json" });
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${id}.json`;
-
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Failed to download the JSON file:", error);
-    }
-  };
-
-  const handleDownloadPTH = async (id: string) => {
-    try {
-      await downloadPTH(forgetClassNumber, id);
-    } catch (error) {
-      console.error("Failed to download the PTH file:", error);
-    }
-  };
-
   return (
     <div className="w-full h-[197px]">
       <div className="relative w-full">
@@ -402,26 +311,6 @@ export default function DataTable({
                         })}
                       </TableRow>
                     </ContextMenuTrigger>
-                    <ContextMenuContent>
-                      {!row.id.startsWith("000") &&
-                        !row.id.startsWith("a00") && (
-                          <ContextMenuItem
-                            onClick={() => handleDeleteRow(row.id)}
-                          >
-                            Delete
-                          </ContextMenuItem>
-                        )}
-                      <ContextMenuItem
-                        onClick={() => handleDownloadJSON(row.id)}
-                      >
-                        Download JSON
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        onClick={() => handleDownloadPTH(row.id)}
-                      >
-                        Download PTH
-                      </ContextMenuItem>
-                    </ContextMenuContent>
                   </ContextMenu>
                 ))
               ) : (

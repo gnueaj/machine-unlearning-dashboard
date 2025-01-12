@@ -23,11 +23,11 @@ import {
   SelectValue,
 } from "./UI/select";
 import { useForgetClass } from "../hooks/useForgetClass";
+import { loadExperimentData } from "../constants/allData";
 import { FORGET_CLASS_NAMES } from "../constants/common";
 import { ForgetClassContext } from "../store/forget-class-context";
 import { Experiments } from "../types/experiments-context";
 import { ExperimentsContext } from "../store/experiments-context";
-import { fetchAllExperimentsData } from "../utils/api/unlearning";
 import { Label } from "./UI/label";
 import Button from "./Button";
 
@@ -54,13 +54,12 @@ export default function Header() {
   const [targetFC, setTargetFC] = useState(() => unselectForgetClasses[0]);
   const [open, setOpen] = useState(() => selectedForgetClasses.length === 0);
 
-  const fetchAndSaveExperiments = async (forgetClass: string) => {
-    const classIndex = FORGET_CLASS_NAMES.indexOf(forgetClass);
+  const fetchAndSaveExperiments = async (targetClass: string) => {
+    const forgetClass = FORGET_CLASS_NAMES.indexOf(targetClass);
     setIsExperimentsLoading(true);
     try {
-      const allData: Experiments = await fetchAllExperimentsData(classIndex);
-      if ("detail" in allData) saveExperiments({});
-      else saveExperiments(allData);
+      const data: Experiments = await loadExperimentData(forgetClass);
+      saveExperiments(data);
     } finally {
       setIsExperimentsLoading(false);
     }

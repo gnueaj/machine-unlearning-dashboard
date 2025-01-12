@@ -35,7 +35,7 @@ import { useForgetClass } from "../../hooks/useForgetClass";
 import { useModelSelection } from "../../hooks/useModelSelection";
 import { calculateZoom } from "../../utils/util";
 import { COLORS } from "../../constants/colors";
-import { API_URL, ANIMATION_DURATION } from "../../constants/common";
+import { ANIMATION_DURATION } from "../../constants/common";
 
 const VIEW_MODES: ViewModeType[] = [
   "All Instances",
@@ -366,17 +366,9 @@ const ScatterPlot = forwardRef(
         fetchControllerRef.current = controller;
 
         try {
-          const response = await fetch(`${API_URL}/image/cifar10/${d[4]}`, {
-            signal: controller.signal,
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch image");
-
-          const blob = await response.blob();
           if (controller.signal.aborted) return;
 
           const prob = d[5] as Prob;
-          const imageUrl = URL.createObjectURL(blob);
 
           const currentHoveredInstance = hoveredInstanceRef.current;
 
@@ -410,7 +402,7 @@ const ScatterPlot = forwardRef(
             <EmbeddingTooltip
               width={CONFIG.TOOLTIP_X_SIZE}
               height={CONFIG.TOOLTIP_Y_SIZE}
-              imageUrl={imageUrl}
+              imageUrl={`${process.env.PUBLIC_URL}/cifar10_images/${d[4]}.png`}
               data={d}
               barChartData={barChartData}
               forgetClass={forgetClass!}
@@ -419,10 +411,6 @@ const ScatterPlot = forwardRef(
           );
 
           showTooltip(event, tooltipContent);
-
-          return () => {
-            URL.revokeObjectURL(imageUrl);
-          };
         } catch (err) {
           if (err instanceof Error && err.name === "AbortError") return;
           console.error("Failed to fetch tooltip data:", err);
