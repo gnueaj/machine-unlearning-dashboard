@@ -12,12 +12,12 @@ export const TABLEAU10 = [
 ];
 
 export const COLORS = {
-  WHITE: "FFF",
+  WHITE: "#FFF",
   BLACK: "#000",
 
-  PURPLE: "#a855f7",
+  PURPLE: "#A855F7",
 
-  EMERALD: "#10b981",
+  EMERALD: "#10B981",
 
   LIGHT_GRAY: "#808080",
   GRAY: "#777",
