@@ -230,40 +230,6 @@ const ScatterPlot = forwardRef(
         handleZoom(event.transform);
       });
 
-    useEffect(() => {
-      if (!svgElements.current.svg) return;
-
-      const svg = svgElements.current.svg;
-      svg.style("cursor", "grab");
-
-      const handleMouseDown = () => {
-        svg.style("cursor", "grabbing");
-      };
-
-      const handleMouseUp = () => {
-        svg.style("cursor", "grab");
-      };
-
-      const node = svg.node();
-      if (node) {
-        node.addEventListener("mousedown", handleMouseDown);
-        node.addEventListener("mouseup", handleMouseUp, true);
-        window.addEventListener("mouseup", handleMouseUp);
-
-        zoomRef.current = zoom;
-        svg.call(zoom as any);
-      }
-
-      return () => {
-        if (node) {
-          node.removeEventListener("mousedown", handleMouseDown);
-          node.removeEventListener("mouseup", handleMouseUp, true);
-          window.removeEventListener("mouseup", handleMouseUp);
-          svg.on(".zoom", null);
-        }
-      };
-    }, [zoom]);
-
     const resetZoom = () => {
       if (zoomRef.current && svgRef.current) {
         d3.select(svgRef.current)
@@ -612,9 +578,42 @@ const ScatterPlot = forwardRef(
         initializeSvg();
       }
 
+      const svg = svgElements.current.svg;
+      const currentNode = svgRef.current;
+
+      if (!svg) return;
+      svg.style("cursor", "grab");
+
+      const handleMouseDown = () => {
+        svg.style("cursor", "grabbing");
+      };
+
+      const handleMouseUp = () => {
+        svg.style("cursor", "grab");
+      };
+
+      if (currentNode) {
+        currentNode.addEventListener("mousedown", handleMouseDown);
+        currentNode.addEventListener("mouseup", handleMouseUp, true);
+        window.addEventListener("mouseup", handleMouseUp);
+
+        zoomRef.current = zoom;
+        svg.call(zoom as any);
+      }
+
       updateElements();
 
       return () => {
+        if (currentNode) {
+          currentNode.removeEventListener("mousedown", handleMouseDown);
+          currentNode.removeEventListener("mouseup", handleMouseUp, true);
+          window.removeEventListener("mouseup", handleMouseUp);
+
+          if (svgElements.current.svg) {
+            svgElements.current.svg.on(".zoom", null);
+          }
+        }
+
         if (svgElements.current.circles) {
           svgElements.current.circles
             .on("click", null)
@@ -628,7 +627,7 @@ const ScatterPlot = forwardRef(
             .on("mouseleave", null);
         }
       };
-    }, [data.length, idExist, initializeSvg, updateElements]);
+    }, [data.length, idExist, initializeSvg, updateElements, zoom]);
 
     useEffect(() => {
       if (!svgElements.current.circles && !svgElements.current.crosses) return;
